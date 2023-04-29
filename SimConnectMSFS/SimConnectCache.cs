@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using Microsoft.FlightSimulator.SimConnect;
+using System.Web.Caching;
+using System.IO;
 //using LockheedMartin.Prepar3D.SimConnect;
 
 namespace MobiFlight.SimConnectMSFS
@@ -448,6 +450,20 @@ namespace MobiFlight.SimConnectMSFS
         public void setEventID(int eventID, int param)
         {
             throw new NotImplementedException();
+        }
+
+        internal void UpdateConfig()
+        {
+            CreateSimConnectConfigFile();
+            Disconnect();
+            Connect();
+        }
+
+        private void CreateSimConnectConfigFile()
+        {
+            var address = Properties.Settings.Default.RemoteIpAddress.Split(':');
+
+            File.WriteAllText("SimConnect.cfg", $"[SimConnect]\r\nProtocol=Ipv4\r\nPort={address[1]}\r\nAddress={address[0]}");
         }
         #endregion
     }

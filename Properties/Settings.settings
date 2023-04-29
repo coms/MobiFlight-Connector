@@ -111,5 +111,11 @@
     <Setting Name="AutoRetrigger" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="RemoteConnection" Type="System.String" Scope="User">
+      <Value Profile="(Default)">None</Value>
+    </Setting>
+    <Setting Name="RemoteIpAddress" Type="System.String" Scope="User">
+      <Value Profile="(Default)">127.0.0.1:500</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

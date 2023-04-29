@@ -37,6 +37,23 @@ namespace MobiFlight.UI.Panels.Settings
             languageComboBox.SelectedIndex = 0;
         }
 
+        protected void InitializeRemoteConnectionComboBox()
+        {
+            remoteConnectionComboBox.Items.Clear();
+
+            var languageOptions = new List<ListItem>
+            {
+                new ListItem() { Value = "None", Label = "Disabled" },
+                new ListItem() { Value = FlightSimType.MSFS2020.ToString(), Label = FlightSimType.MSFS2020.ToString() },
+                new ListItem() { Value = FlightSimType.XPLANE.ToString(), Label = FlightSimType.XPLANE.ToString() }
+            };
+
+            remoteConnectionComboBox.DataSource = languageOptions;
+            remoteConnectionComboBox.DisplayMember = "Label";
+            remoteConnectionComboBox.ValueMember = "Value";
+            remoteConnectionComboBox.SelectedIndex = 0;
+        }
+
         protected void InitializeLogLevelComboBox()
         {
             List<ListItem> LogLevels = new List<ListItem>();
@@ -90,6 +107,10 @@ namespace MobiFlight.UI.Panels.Settings
 
             // Auto-retrigger
             autoRetriggerCheckBox.Checked = Properties.Settings.Default.AutoRetrigger;
+
+            InitializeRemoteConnectionComboBox();
+            ComboBoxHelper.SetSelectedItem(remoteConnectionComboBox, Properties.Settings.Default.RemoteConnection);
+            remoteConnectionTextBox.Text = Properties.Settings.Default.RemoteIpAddress;
         }
 
         public void saveSettings()
@@ -126,6 +147,10 @@ namespace MobiFlight.UI.Panels.Settings
 
             // Auto-retrigger
             Properties.Settings.Default.AutoRetrigger = autoRetriggerCheckBox.Checked;
+
+            // Remote Connection 
+            Properties.Settings.Default.RemoteConnection = remoteConnectionComboBox.SelectedValue.ToString();
+            Properties.Settings.Default.RemoteIpAddress = remoteConnectionTextBox.Text;
         }
     }
 }

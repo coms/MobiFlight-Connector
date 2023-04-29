@@ -1488,6 +1488,10 @@ namespace MobiFlight
             return simConnectCache;
         }
 
+        public XplaneCache GetXplaneCache()
+        {
+            return xplaneCache;
+        }
 
         private void OnStartActions()
         {

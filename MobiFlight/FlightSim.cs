@@ -14,7 +14,9 @@ namespace MobiFlight
         WIDECLIENT,
         XPUIPC,
         SIMCONNECT,
+        SIMCONNECT_REMOTE,
         XPLANE,
+        XPLANE_REMOTE,
         OFFLINE
     }
 
@@ -42,7 +44,9 @@ namespace MobiFlight
             { FlightSimConnectionMethod.WIDECLIENT, "WideClient" },
             { FlightSimConnectionMethod.XPUIPC, "XPUIPC" },
             { FlightSimConnectionMethod.SIMCONNECT, "SimConnect" },
+            { FlightSimConnectionMethod.SIMCONNECT_REMOTE, "SimConnect (Remote)" },
             { FlightSimConnectionMethod.XPLANE, "X-Plane (Direct)" },
+            { FlightSimConnectionMethod.XPLANE_REMOTE, "X-Plane (Remote)" },
             { FlightSimConnectionMethod.OFFLINE, "Offline" },
         };
 
@@ -80,7 +84,14 @@ namespace MobiFlight
             // check for msfs2020
             if (Process.GetProcessesByName(proc).Length > 0)
             {
-                FlightSimConnectionMethod = FlightSimConnectionMethod.FSUIPC;
+                FlightSimConnectionMethod = FlightSimConnectionMethod.SIMCONNECT;
+                FlightSimType = FlightSimType.MSFS2020;
+                return true;
+            }
+
+            if (Properties.Settings.Default.RemoteConnection == FlightSimType.MSFS2020.ToString())
+            {
+                FlightSimConnectionMethod = FlightSimConnectionMethod.SIMCONNECT_REMOTE;
                 FlightSimType = FlightSimType.MSFS2020;
                 return true;
             }
@@ -123,6 +134,13 @@ namespace MobiFlight
             if (Process.GetProcessesByName(proc).Length > 0)
             {
                 FlightSimConnectionMethod = FlightSimConnectionMethod.WIDECLIENT;
+                FlightSimType = FlightSimType.XPLANE;
+                return true;
+            }
+
+            if (Properties.Settings.Default.RemoteConnection == FlightSimType.XPLANE.ToString())
+            {
+                FlightSimConnectionMethod = FlightSimConnectionMethod.XPLANE_REMOTE;
                 FlightSimType = FlightSimType.XPLANE;
                 return true;
             }
